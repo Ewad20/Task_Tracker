@@ -1,0 +1,6 @@
+@TaksTracker.Server_HostAddress = http://localhost:5148
+
+GET {{TaksTracker.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

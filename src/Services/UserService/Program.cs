@@ -1,0 +1,144 @@
+using BuildingBlocks.Aspects;
+using BuildingBlocks.Middleware;
+using BuildingBlocks.Persistence;
+using Consul;
+using MediatR;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Trace;
+using System.Text;
+using UserService.Consul;
+using UserService.Data;
+using UserService.Entities;
+using UserService.Messaging;
+using UserService.Security;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSqlServerDbContextWithAudit<UserDbContext>(builder.Configuration);
+
+builder.Services.AddIdentityCore<ApplicationUser>()
+    .AddRoles<IdentityRole>()
+    .AddSignInManager()
+    .AddEntityFrameworkStores<UserDbContext>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwt = builder.Configuration.GetSection("Jwt");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"] ?? string.Empty))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddMediatR(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddControllersWithApplicationAspects();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty);
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation());
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+builder.Services.Configure<ConsulSettings>(builder.Configuration.GetSection("Consul"));
+builder.Services.AddSingleton<IConsulClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<ConsulSettings>>().Value;
+    return new ConsulClient(config =>
+    {
+        if (!string.IsNullOrWhiteSpace(settings.ConsulAddress))
+        {
+            config.Address = new Uri(settings.ConsulAddress);
+        }
+    });
+});
+builder.Services.AddHostedService<ConsulRegistrationService>();
+
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+
+var app = builder.Build();
+AspectExecutionLogger.Configure(app.Services);
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<UserDbContext>();
+    dbContext.Database.Migrate();
+
+    var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    var adminSection = configuration.GetSection("AdminSeed");
+    var adminEmail = adminSection["Email"] ?? "admin@tasktracker.local";
+    var adminPassword = adminSection["Password"] ?? "Admin123!";
+    var adminDisplayName = adminSection["DisplayName"] ?? "Administrator";
+
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser is null)
+    {
+        adminUser = new ApplicationUser { UserName = adminEmail, Email = adminEmail };
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        if (!result.Succeeded)
+        {
+            var message = string.Join("; ", result.Errors.Select(error => error.Description));
+            throw new InvalidOperationException(message);
+        }
+    }
+
+    var adminProfile = await dbContext.UserProfiles.FirstOrDefaultAsync(profile => profile.UserId == adminUser.Id);
+    if (adminProfile is null)
+    {
+        adminProfile = new UserProfile
+        {
+            Id = Guid.NewGuid(),
+            UserId = adminUser.Id,
+            DisplayName = adminDisplayName,
+            Role = "Admin"
+        };
+        dbContext.UserProfiles.Add(adminProfile);
+    }
+    else
+    {
+        adminProfile.DisplayName = adminDisplayName;
+        adminProfile.Role = "Admin";
+    }
+
+    await dbContext.SaveChangesAsync();
+}
+
+app.UseMiddleware<ApiExceptionHandlingMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapHealthChecks("/health");
+
+app.Run();

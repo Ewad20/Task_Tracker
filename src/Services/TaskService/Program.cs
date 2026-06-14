@@ -1,0 +1,104 @@
+using BuildingBlocks.Aspects;
+using BuildingBlocks.Middleware;
+using BuildingBlocks.Persistence;
+using Consul;
+using MediatR;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Trace;
+using TaskService.Aspects;
+using System.Text;
+using TaskService.Consul;
+using TaskService.Data;
+using TaskService.Messaging;
+using TaskService.Repositories;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSqlServerDbContextWithAudit<TaskDbContext>(builder.Configuration);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        var jwt = builder.Configuration.GetSection("Jwt");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"] ?? string.Empty))
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+builder.Services.AddMediatR(typeof(Program).Assembly);
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+builder.Services.AddScoped<IOverdueTaskNotifier, OverdueTaskNotifier>();
+builder.Services.AddScoped<IUpcomingTaskDeadlineNotifier, UpcomingTaskDeadlineNotifier>();
+builder.Services.AddScoped<IHighPriorityTaskNotifier, HighPriorityTaskNotifier>();
+builder.Services.AddScoped<IProjectReportRefresher, ProjectReportRefresher>();
+
+builder.Services.AddControllersWithApplicationAspects();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddHealthChecks()
+    .AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty);
+
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddAspNetCoreInstrumentation()
+        .AddHttpClientInstrumentation());
+
+builder.Services.Configure<ConsulSettings>(builder.Configuration.GetSection("Consul"));
+builder.Services.AddSingleton<IConsulClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<ConsulSettings>>().Value;
+    return new ConsulClient(config =>
+    {
+        if (!string.IsNullOrWhiteSpace(settings.ConsulAddress))
+        {
+            config.Address = new Uri(settings.ConsulAddress);
+        }
+    });
+});
+builder.Services.AddHostedService<ConsulRegistrationService>();
+
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMq"));
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+
+var app = builder.Build();
+AspectExecutionLogger.Configure(app.Services);
+OverdueTaskNotificationRuntime.Configure(app.Services);
+UpcomingTaskDeadlineNotificationRuntime.Configure(app.Services);
+HighPriorityTaskNotificationRuntime.Configure(app.Services);
+ProjectReportRefreshRuntime.Configure(app.Services);
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
+    dbContext.Database.Migrate();
+}
+
+app.UseMiddleware<ApiExceptionHandlingMiddleware>();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapHealthChecks("/health");
+
+app.Run();

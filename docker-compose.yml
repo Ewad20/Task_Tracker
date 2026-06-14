@@ -1,0 +1,193 @@
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: src/Gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+    depends_on:
+      - userservice
+      - projectservice
+      - taskservice
+      - notificationservice
+      - auditservice
+      - reportingservice
+      - consul
+
+  userservice:
+    build:
+      context: .
+      dockerfile: src/Services/UserService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=UserServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Jwt__Issuer=tasktracker
+      - Jwt__Audience=tasktracker
+      - Jwt__Key=tasktracker-development-secret-key-32chars
+      - Consul__ServiceName=userservice
+      - Consul__ServiceAddress=http://userservice:8080
+      - Consul__ServiceId=userservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  projectservice:
+    build:
+      context: .
+      dockerfile: src/Services/ProjectService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ProjectServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Jwt__Issuer=tasktracker
+      - Jwt__Audience=tasktracker
+      - Jwt__Key=tasktracker-development-secret-key-32chars
+      - Consul__ServiceName=projectservice
+      - Consul__ServiceAddress=http://projectservice:8080
+      - Consul__ServiceId=projectservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  taskservice:
+    build:
+      context: .
+      dockerfile: src/Services/TaskService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=TaskServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Jwt__Issuer=tasktracker
+      - Jwt__Audience=tasktracker
+      - Jwt__Key=tasktracker-development-secret-key-32chars
+      - Consul__ServiceName=taskservice
+      - Consul__ServiceAddress=http://taskservice:8080
+      - Consul__ServiceId=taskservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  notificationservice:
+    build:
+      context: .
+      dockerfile: src/Services/NotificationService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=NotificationServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Consul__ServiceName=notificationservice
+      - Consul__ServiceAddress=http://notificationservice:8080
+      - Consul__ServiceId=notificationservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  auditservice:
+    build:
+      context: .
+      dockerfile: src/Services/AuditService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=AuditServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Consul__ServiceName=auditservice
+      - Consul__ServiceAddress=http://auditservice:8080
+      - Consul__ServiceId=auditservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  reportingservice:
+    build:
+      context: .
+      dockerfile: src/Services/ReportingService/Dockerfile
+      args:
+        PostSharpLicense: ${PostSharpLicense:-}
+    environment:
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=ReportingServiceDb;User Id=sa;Password=Your_password123;TrustServerCertificate=True
+      - Consul__ServiceName=reportingservice
+      - Consul__ServiceAddress=http://reportingservice:8080
+      - Consul__ServiceId=reportingservice-1
+      - Consul__ConsulAddress=http://consul:8500
+      - RabbitMq__Host=rabbitmq
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
+      consul:
+        condition: service_started
+    restart: on-failure
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_password123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/bin/bash -c '</dev/tcp/localhost/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  consul:
+    image: hashicorp/consul:1.17
+    ports:
+      - "8500:8500"
+    command: "agent -dev -client=0.0.0.0"
+
+volumes:
+  sqlserver-data:
