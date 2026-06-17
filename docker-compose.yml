@@ -1,4 +1,16 @@
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: takstracker.client/Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080
+    depends_on:
+      - gateway
+    restart: on-failure
+
   gateway:
     build:
       context: .

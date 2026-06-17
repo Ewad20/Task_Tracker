@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>NotificationService</name>
+    </assembly>
+    <members>
+        <member name="T:NotificationService.Controllers.NotificationsController">
+            <summary>
+            Zarządza powiadomieniami użytkownika.
+            </summary>
+        </member>
+        <member name="M:NotificationService.Controllers.NotificationsController.#ctor(MediatR.IMediator)">
+            <summary>
+            Zarządza powiadomieniami użytkownika.
+            </summary>
+        </member>
+        <member name="M:NotificationService.Controllers.NotificationsController.GetMyNotifications(System.Nullable{System.Guid},System.Threading.CancellationToken)">
+            <summary>
+            Zwraca powiadomienia aktualnie zalogowanego użytkownika.
+            </summary>
+        </member>
+        <member name="M:NotificationService.Controllers.NotificationsController.MarkRead(System.Guid,NotificationService.Contracts.Notifications.MarkReadRequest,System.Threading.CancellationToken)">
+            <summary>
+            Oznacza powiadomienie jako przeczytane lub nieprzeczytane.
+            </summary>
+        </member>
+        <member name="T:NotificationService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:NotificationService.Migrations.AddNotificationTaskContext">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.AddNotificationTaskContext.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.AddNotificationTaskContext.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:NotificationService.Migrations.AddNotificationTaskContext.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

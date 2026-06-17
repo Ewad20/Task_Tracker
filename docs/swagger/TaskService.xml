@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaskService</name>
+    </assembly>
+    <members>
+        <member name="T:TaskService.Controllers.TasksController">
+            <summary>
+            Zarządza zadaniami w ramach projektów.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.#ctor(MediatR.IMediator)">
+            <summary>
+            Zarządza zadaniami w ramach projektów.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.GetAll(TaskService.Contracts.Tasks.TaskFilterRequest,System.Threading.CancellationToken)">
+            <summary>
+            Zwraca listę zadań z opcjonalnym filtrowaniem.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Zwraca szczegóły wskazanego zadania.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.Create(TaskService.Contracts.Tasks.CreateTaskRequest,System.Threading.CancellationToken)">
+            <summary>
+            Tworzy nowe zadanie w projekcie.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.Update(System.Guid,TaskService.Contracts.Tasks.UpdateTaskRequest,System.Threading.CancellationToken)">
+            <summary>
+            Aktualizuje istniejące zadanie.
+            </summary>
+        </member>
+        <member name="M:TaskService.Controllers.TasksController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Usuwa wskazane zadanie.
+            </summary>
+        </member>
+        <member name="T:TaskService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TaskService.Migrations.AddTaskOverdueNotification">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskOverdueNotification.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskOverdueNotification.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskOverdueNotification.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TaskService.Migrations.AddTaskDueSoonNotification">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskDueSoonNotification.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskDueSoonNotification.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskDueSoonNotification.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TaskService.Migrations.AddTaskHighPriorityNotification">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskHighPriorityNotification.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskHighPriorityNotification.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TaskService.Migrations.AddTaskHighPriorityNotification.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

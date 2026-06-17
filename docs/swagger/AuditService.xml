@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AuditService</name>
+    </assembly>
+    <members>
+        <member name="T:AuditService.Controllers.AuditController">
+            <summary>
+            Udostępnia historię zdarzeń systemu do celów audytu.
+            </summary>
+        </member>
+        <member name="M:AuditService.Controllers.AuditController.#ctor(MediatR.IMediator)">
+            <summary>
+            Udostępnia historię zdarzeń systemu do celów audytu.
+            </summary>
+        </member>
+        <member name="M:AuditService.Controllers.AuditController.Get(AuditService.Contracts.Audit.AuditFilterRequest,System.Threading.CancellationToken)">
+            <summary>
+            Zwraca logi audytu z opcjonalnym filtrowaniem po użytkowniku, akcji i typie encji.
+            </summary>
+        </member>
+        <member name="T:AuditService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:AuditService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AuditService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:AuditService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

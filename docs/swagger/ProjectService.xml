@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProjectService</name>
+    </assembly>
+    <members>
+        <member name="T:ProjectService.Controllers.ProjectsController">
+            <summary>
+            Zarządza projektami zespołowymi.
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.#ctor(MediatR.IMediator)">
+            <summary>
+            Zarządza projektami zespołowymi.
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Zwraca listę projektów dostępnych dla aktualnego użytkownika.
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Zwraca szczegóły wskazanego projektu.
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.Create(ProjectService.Contracts.Projects.CreateProjectRequest,System.Threading.CancellationToken)">
+            <summary>
+            Tworzy nowy projekt (tylko Admin).
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.Update(System.Guid,ProjectService.Contracts.Projects.UpdateProjectRequest,System.Threading.CancellationToken)">
+            <summary>
+            Aktualizuje dane projektu (tylko Admin).
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Usuwa projekt (tylko Admin).
+            </summary>
+        </member>
+        <member name="M:ProjectService.Controllers.ProjectsController.AddMember(System.Guid,ProjectService.Contracts.Projects.AddMemberRequest,System.Threading.CancellationToken)">
+            <summary>
+            Dodaje nowego członka do projektu (tylko Admin).
+            </summary>
+        </member>
+        <member name="T:ProjectService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjectService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjectService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProjectService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

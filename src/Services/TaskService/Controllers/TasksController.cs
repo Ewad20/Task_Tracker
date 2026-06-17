@@ -9,11 +9,17 @@ using TaskService.Features.Tasks;
 
 namespace TaskService.Controllers;
 
+/// <summary>
+/// Zarządza zadaniami w ramach projektów.
+/// </summary>
 [ApiController]
 [Authorize]
 [Route("api/tasks")]
 public sealed class TasksController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Zwraca listę zadań z opcjonalnym filtrowaniem.
+    /// </summary>
     [HttpGet]
     [LogExecution("Tasks API")]
     [NotifyOverdueTasks]
@@ -25,6 +31,9 @@ public sealed class TasksController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Zwraca szczegóły wskazanego zadania.
+    /// </summary>
     [HttpGet("{taskId:guid}")]
     [LogExecution("Tasks API")]
     [NotifyOverdueTasks]
@@ -36,6 +45,9 @@ public sealed class TasksController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Tworzy nowe zadanie w projekcie.
+    /// </summary>
     [HttpPost]
     [LogExecution("Tasks API")]
     [NotifyOverdueTasks]
@@ -50,6 +62,9 @@ public sealed class TasksController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(GetById), new { taskId = result.Id }, result);
     }
 
+    /// <summary>
+    /// Aktualizuje istniejące zadanie.
+    /// </summary>
     [HttpPut("{taskId:guid}")]
     [LogExecution("Tasks API")]
     [NotifyOverdueTasks]
@@ -64,6 +79,9 @@ public sealed class TasksController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Usuwa wskazane zadanie.
+    /// </summary>
     [HttpDelete("{taskId:guid}")]
     [LogExecution("Tasks API")]
     [NotifyOverdueTasks]

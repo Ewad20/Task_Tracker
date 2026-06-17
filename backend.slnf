@@ -1,0 +1,19 @@
+{
+  "solution": {
+    "path": "TaksTracker.sln",
+    "projects": [
+      "src\\BuildingBlocks\\BuildingBlocks.csproj",
+      "src\\Gateway\\Gateway.csproj",
+      "src\\Services\\UserService\\UserService.csproj",
+      "src\\Services\\ProjectService\\ProjectService.csproj",
+      "src\\Services\\TaskService\\TaskService.csproj",
+      "src\\Services\\NotificationService\\NotificationService.csproj",
+      "src\\Services\\AuditService\\AuditService.csproj",
+      "src\\Services\\ReportingService\\ReportingService.csproj",
+      "tests\\BuildingBlocks.Tests\\BuildingBlocks.Tests.csproj",
+      "tests\\UserService.Tests\\UserService.Tests.csproj",
+      "tests\\TaskService.Tests\\TaskService.Tests.csproj",
+      "tests\\ProjectService.Tests\\ProjectService.Tests.csproj"
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserService</name>
+    </assembly>
+    <members>
+        <member name="T:UserService.Controllers.AuthController">
+            <summary>
+            Zarządza uwierzytelnianiem użytkowników — rejestracja i logowanie.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.AuthController.#ctor(MediatR.IMediator)">
+            <summary>
+            Zarządza uwierzytelnianiem użytkowników — rejestracja i logowanie.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.AuthController.Register(UserService.Contracts.Auth.RegisterRequest,System.Threading.CancellationToken)">
+            <summary>
+            Rejestruje nowego użytkownika w systemie i zwraca token JWT.
+            </summary>
+            <param name="request">Dane rejestracyjne: email, hasło, nazwa wyświetlana.</param>
+            <param name="cancellationToken">Token anulowania żądania.</param>
+            <returns>Token JWT oraz czas wygaśnięcia sesji.</returns>
+            <response code="200">Rejestracja powiodła się.</response>
+            <response code="400">Dane rejestracyjne są nieprawidłowe.</response>
+        </member>
+        <member name="M:UserService.Controllers.AuthController.Login(UserService.Contracts.Auth.LoginRequest,System.Threading.CancellationToken)">
+            <summary>
+            Loguje istniejącego użytkownika i zwraca token JWT.
+            </summary>
+            <param name="request">Dane logowania: email i hasło.</param>
+            <param name="cancellationToken">Token anulowania żądania.</param>
+            <returns>Token JWT oraz czas wygaśnięcia sesji.</returns>
+            <response code="200">Logowanie powiodło się.</response>
+            <response code="401">Nieprawidłowe dane logowania.</response>
+        </member>
+        <member name="T:UserService.Controllers.UsersController">
+            <summary>
+            Zarządza profilami użytkowników oraz administracją kont.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.#ctor(MediatR.IMediator)">
+            <summary>
+            Zarządza profilami użytkowników oraz administracją kont.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Zwraca listę wszystkich profili użytkowników.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.GetProfile(System.Threading.CancellationToken)">
+            <summary>
+            Zwraca profil aktualnie zalogowanego użytkownika.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.UpdateProfile(UserService.Contracts.Users.UpdateProfileRequest,System.Threading.CancellationToken)">
+            <summary>
+            Aktualizuje profil aktualnie zalogowanego użytkownika.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.ChangePassword(UserService.Contracts.Users.ChangePasswordRequest,System.Threading.CancellationToken)">
+            <summary>
+            Zmienia hasło aktualnie zalogowanego użytkownika.
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.UpdateRole(System.String,UserService.Contracts.Users.UpdateUserRoleRequest,System.Threading.CancellationToken)">
+            <summary>
+            Zmienia rolę wskazanego użytkownika (tylko Admin).
+            </summary>
+        </member>
+        <member name="M:UserService.Controllers.UsersController.ResetPassword(System.String,UserService.Contracts.Users.ResetUserPasswordRequest,System.Threading.CancellationToken)">
+            <summary>
+            Wymusza reset hasła wskazanego użytkownika (tylko Admin).
+            </summary>
+        </member>
+        <member name="T:UserService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:UserService.Migrations.AddUserProfileRole">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.AddUserProfileRole.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.AddUserProfileRole.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:UserService.Migrations.AddUserProfileRole.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

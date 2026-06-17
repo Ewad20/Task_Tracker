@@ -8,11 +8,17 @@ using UserService.Features.Users;
 
 namespace UserService.Controllers;
 
+/// <summary>
+/// Zarządza profilami użytkowników oraz administracją kont.
+/// </summary>
 [ApiController]
 [Authorize]
 [Route("api/users")]
 public sealed class UsersController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Zwraca listę wszystkich profili użytkowników.
+    /// </summary>
     [HttpGet]
     [LogExecution("Users API")]
     public async Task<ActionResult<IReadOnlyList<UserProfileDto>>> GetAll(CancellationToken cancellationToken)
@@ -21,6 +27,9 @@ public sealed class UsersController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Zwraca profil aktualnie zalogowanego użytkownika.
+    /// </summary>
     [HttpGet("me")]
     [LogExecution("Users API")]
     public async Task<ActionResult<UserProfileDto>> GetProfile(CancellationToken cancellationToken)
@@ -30,6 +39,9 @@ public sealed class UsersController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Aktualizuje profil aktualnie zalogowanego użytkownika.
+    /// </summary>
     [HttpPut("me")]
     [LogExecution("Users API")]
     public async Task<ActionResult<UserProfileDto>> UpdateProfile(UpdateProfileRequest request, CancellationToken cancellationToken)
@@ -39,6 +51,9 @@ public sealed class UsersController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Zmienia hasło aktualnie zalogowanego użytkownika.
+    /// </summary>
     [HttpPut("me/password")]
     [LogExecution("Users API")]
     public async Task<IActionResult> ChangePassword(ChangePasswordRequest request, CancellationToken cancellationToken)
@@ -48,6 +63,9 @@ public sealed class UsersController(IMediator mediator) : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
+    /// Zmienia rolę wskazanego użytkownika (tylko Admin).
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [HttpPut("{userId}/role")]
     [LogExecution("Users API")]
@@ -60,6 +78,9 @@ public sealed class UsersController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Wymusza reset hasła wskazanego użytkownika (tylko Admin).
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [HttpPut("{userId}/password")]
     [LogExecution("Users API")]

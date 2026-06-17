@@ -8,11 +8,17 @@ using NotificationService.Features.Notifications;
 
 namespace NotificationService.Controllers;
 
+/// <summary>
+/// Zarządza powiadomieniami użytkownika.
+/// </summary>
 [ApiController]
 [Authorize]
 [Route("api/notifications")]
 public sealed class NotificationsController(IMediator mediator) : ControllerBase
 {
+    /// <summary>
+    /// Zwraca powiadomienia aktualnie zalogowanego użytkownika.
+    /// </summary>
     [HttpGet]
     [LogExecution("Notifications API")]
     public async Task<ActionResult<IReadOnlyList<NotificationDto>>> GetMyNotifications(
@@ -24,6 +30,9 @@ public sealed class NotificationsController(IMediator mediator) : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Oznacza powiadomienie jako przeczytane lub nieprzeczytane.
+    /// </summary>
     [HttpPut("{notificationId:guid}")]
     [LogExecution("Notifications API")]
     public async Task<ActionResult<NotificationDto>> MarkRead(Guid notificationId, MarkReadRequest request, CancellationToken cancellationToken)

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReportingService</name>
+    </assembly>
+    <members>
+        <member name="T:ReportingService.Controllers.ReportsController">
+            <summary>
+            Udostępnia statystyki i raporty postępu prac dla projektów.
+            </summary>
+        </member>
+        <member name="M:ReportingService.Controllers.ReportsController.#ctor(MediatR.IMediator)">
+            <summary>
+            Udostępnia statystyki i raporty postępu prac dla projektów.
+            </summary>
+        </member>
+        <member name="M:ReportingService.Controllers.ReportsController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Zwraca raporty postępu dla wszystkich projektów.
+            </summary>
+        </member>
+        <member name="M:ReportingService.Controllers.ReportsController.GetByProjectId(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Zwraca raport postępu dla wskazanego projektu.
+            </summary>
+        </member>
+        <member name="M:ReportingService.Controllers.ReportsController.Upsert(ReportingService.Contracts.Reports.UpsertProjectReportRequest,System.Threading.CancellationToken)">
+            <summary>
+            Tworzy lub aktualizuje raport projektu.
+            </summary>
+        </member>
+        <member name="T:ReportingService.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ReportingService.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ReportingService.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ReportingService.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="898b9bd0-7045-4e90-a354-2b3aa9bb21e8" name="janof@JANUARY-PC 2026-06-17 09:30:20" runUser="JANUARY-PC\janof" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-06-17T09:30:20.3800064+02:00" queuing="2026-06-17T09:30:20.3800067+02:00" start="2026-06-17T09:30:19.1575276+02:00" finish="2026-06-17T09:30:20.5194275+02:00" />
+  <TestSettings name="default" id="6462a38c-d9dd-4e6f-98ab-bbf9d5ce91fb">
+    <Deployment runDeploymentRoot="janof_JANUARY-PC_2026-06-17_09_30_20" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c5959412-ccfd-4ea3-82ee-fe4daeba5ad1" testId="7ffd0531-44ac-fb4e-9e61-fa43e6cfd5f4" testName="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_PublishesUsersCreatedEvent" computerName="JANUARY-PC" duration="00:00:00.5590715" startTime="2026-06-17T09:30:20.2906181+02:00" endTime="2026-06-17T09:30:20.2906184+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c5959412-ccfd-4ea3-82ee-fe4daeba5ad1" />
+    <UnitTestResult executionId="483af5f8-5f3e-4d21-a391-0c86ff58f506" testId="38922a2a-5df6-060e-1b69-df35bd3611a8" testName="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_CreatesUserProfile" computerName="JANUARY-PC" duration="00:00:00.1319986" startTime="2026-06-17T09:30:20.4658153+02:00" endTime="2026-06-17T09:30:20.4658156+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="483af5f8-5f3e-4d21-a391-0c86ff58f506" />
+    <UnitTestResult executionId="b8f0f729-9d07-47d4-b1d0-92108ba38b39" testId="c34783cd-e5d9-2e74-b2a9-5e01354f2768" testName="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_ReturnsAuthResponseWithToken" computerName="JANUARY-PC" duration="00:00:00.0297777" startTime="2026-06-17T09:30:20.3204451+02:00" endTime="2026-06-17T09:30:20.3204452+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b8f0f729-9d07-47d4-b1d0-92108ba38b39" />
+    <UnitTestResult executionId="61dac789-9647-4d01-9a5f-aab0be8bbe48" testId="574946d9-bbeb-651e-7da2-14db71d4e2ad" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenContainsUserIdClaim" computerName="JANUARY-PC" duration="00:00:00.0030185" startTime="2026-06-17T09:30:19.7899066+02:00" endTime="2026-06-17T09:30:19.7899067+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="61dac789-9647-4d01-9a5f-aab0be8bbe48" />
+    <UnitTestResult executionId="0ed98740-0d04-4676-9b8c-2492f9bd0f30" testId="cb8fbbd2-6eb6-0207-5f74-1485f8829de8" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_DifferentRoles_ProduceDifferentTokens" computerName="JANUARY-PC" duration="00:00:00.0002962" startTime="2026-06-17T09:30:19.7908260+02:00" endTime="2026-06-17T09:30:19.7908261+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0ed98740-0d04-4676-9b8c-2492f9bd0f30" />
+    <UnitTestResult executionId="dc99ee5c-bdb0-44b8-a682-e6ce9406cd00" testId="c0eb7469-b825-fbac-d83d-c787939f81a1" testName="UserService.Tests.Features.RegisterUserHandlerTests.Handle_WhenUserManagerFails_ThrowsInvalidOperationException" computerName="JANUARY-PC" duration="00:00:00.0132454" startTime="2026-06-17T09:30:20.3337549+02:00" endTime="2026-06-17T09:30:20.3337551+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc99ee5c-bdb0-44b8-a682-e6ce9406cd00" />
+    <UnitTestResult executionId="bb28c27f-adcc-4463-a0f0-e8cc7ad511be" testId="586038f9-f35e-dcc7-11a6-1bdf0bcd6722" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_ReturnsNonEmptyToken" computerName="JANUARY-PC" duration="00:00:00.0005444" startTime="2026-06-17T09:30:19.7904399+02:00" endTime="2026-06-17T09:30:19.7904400+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bb28c27f-adcc-4463-a0f0-e8cc7ad511be" />
+    <UnitTestResult executionId="0394eef7-201f-4ab2-afd1-a7a75c27f911" testId="65173565-e428-18f1-6e47-a102fcb6179b" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_ExpiresAtIsInFuture" computerName="JANUARY-PC" duration="00:00:00.0007725" startTime="2026-06-17T09:30:19.7904890+02:00" endTime="2026-06-17T09:30:19.7904891+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0394eef7-201f-4ab2-afd1-a7a75c27f911" />
+    <UnitTestResult executionId="55af49db-5cab-41ee-841a-58b9beb094a7" testId="b6886e00-e63d-8901-d8fa-3cb384ef5a22" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenIssuerAndAudienceMatchConfig" computerName="JANUARY-PC" duration="00:00:00.0028170" startTime="2026-06-17T09:30:19.7936851+02:00" endTime="2026-06-17T09:30:19.7936852+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="55af49db-5cab-41ee-841a-58b9beb094a7" />
+    <UnitTestResult executionId="dfdab07e-37e4-4076-af91-102ad69f3f1f" testId="ad46bd39-4a5c-847a-1344-3de79ee25513" testName="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenContainsRoleClaim" computerName="JANUARY-PC" duration="00:00:00.0518127" startTime="2026-06-17T09:30:19.7864649+02:00" endTime="2026-06-17T09:30:19.7865142+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dfdab07e-37e4-4076-af91-102ad69f3f1f" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_DifferentRoles_ProduceDifferentTokens" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="cb8fbbd2-6eb6-0207-5f74-1485f8829de8">
+      <Execution id="0ed98740-0d04-4676-9b8c-2492f9bd0f30" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_DifferentRoles_ProduceDifferentTokens" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_CreatesUserProfile" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="38922a2a-5df6-060e-1b69-df35bd3611a8">
+      <Execution id="483af5f8-5f3e-4d21-a391-0c86ff58f506" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Features.RegisterUserHandlerTests" name="Handle_ValidCommand_CreatesUserProfile" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenIssuerAndAudienceMatchConfig" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="b6886e00-e63d-8901-d8fa-3cb384ef5a22">
+      <Execution id="55af49db-5cab-41ee-841a-58b9beb094a7" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_TokenIssuerAndAudienceMatchConfig" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_ReturnsNonEmptyToken" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="586038f9-f35e-dcc7-11a6-1bdf0bcd6722">
+      <Execution id="bb28c27f-adcc-4463-a0f0-e8cc7ad511be" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_ReturnsNonEmptyToken" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_ReturnsAuthResponseWithToken" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="c34783cd-e5d9-2e74-b2a9-5e01354f2768">
+      <Execution id="b8f0f729-9d07-47d4-b1d0-92108ba38b39" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Features.RegisterUserHandlerTests" name="Handle_ValidCommand_ReturnsAuthResponseWithToken" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Features.RegisterUserHandlerTests.Handle_WhenUserManagerFails_ThrowsInvalidOperationException" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="c0eb7469-b825-fbac-d83d-c787939f81a1">
+      <Execution id="dc99ee5c-bdb0-44b8-a682-e6ce9406cd00" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Features.RegisterUserHandlerTests" name="Handle_WhenUserManagerFails_ThrowsInvalidOperationException" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_ExpiresAtIsInFuture" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="65173565-e428-18f1-6e47-a102fcb6179b">
+      <Execution id="0394eef7-201f-4ab2-afd1-a7a75c27f911" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_ExpiresAtIsInFuture" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Features.RegisterUserHandlerTests.Handle_ValidCommand_PublishesUsersCreatedEvent" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="7ffd0531-44ac-fb4e-9e61-fa43e6cfd5f4">
+      <Execution id="c5959412-ccfd-4ea3-82ee-fe4daeba5ad1" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Features.RegisterUserHandlerTests" name="Handle_ValidCommand_PublishesUsersCreatedEvent" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenContainsRoleClaim" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="ad46bd39-4a5c-847a-1344-3de79ee25513">
+      <Execution id="dfdab07e-37e4-4076-af91-102ad69f3f1f" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_TokenContainsRoleClaim" />
+    </UnitTest>
+    <UnitTest name="UserService.Tests.Security.JwtTokenServiceTests.CreateToken_TokenContainsUserIdClaim" storage="c:\users\janof\documents\studies\miab_proj\task_tracker\tests\userservice.tests\bin\release\net10.0\userservice.tests.dll" id="574946d9-bbeb-651e-7da2-14db71d4e2ad">
+      <Execution id="61dac789-9647-4d01-9a5f-aab0be8bbe48" />
+      <TestMethod codeBase="C:\Users\janof\Documents\studies\miab_proj\Task_Tracker\tests\UserService.Tests\bin\Release\net10.0\UserService.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="UserService.Tests.Security.JwtTokenServiceTests" name="CreateToken_TokenContainsUserIdClaim" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="7ffd0531-44ac-fb4e-9e61-fa43e6cfd5f4" executionId="c5959412-ccfd-4ea3-82ee-fe4daeba5ad1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="38922a2a-5df6-060e-1b69-df35bd3611a8" executionId="483af5f8-5f3e-4d21-a391-0c86ff58f506" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c34783cd-e5d9-2e74-b2a9-5e01354f2768" executionId="b8f0f729-9d07-47d4-b1d0-92108ba38b39" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="574946d9-bbeb-651e-7da2-14db71d4e2ad" executionId="61dac789-9647-4d01-9a5f-aab0be8bbe48" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cb8fbbd2-6eb6-0207-5f74-1485f8829de8" executionId="0ed98740-0d04-4676-9b8c-2492f9bd0f30" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0eb7469-b825-fbac-d83d-c787939f81a1" executionId="dc99ee5c-bdb0-44b8-a682-e6ce9406cd00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="586038f9-f35e-dcc7-11a6-1bdf0bcd6722" executionId="bb28c27f-adcc-4463-a0f0-e8cc7ad511be" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="65173565-e428-18f1-6e47-a102fcb6179b" executionId="0394eef7-201f-4ab2-afd1-a7a75c27f911" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b6886e00-e63d-8901-d8fa-3cb384ef5a22" executionId="55af49db-5cab-41ee-841a-58b9beb094a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ad46bd39-4a5c-847a-1344-3de79ee25513" executionId="dfdab07e-37e4-4076-af91-102ad69f3f1f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Wyniki, których nie ma na liście" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="Wszystkie załadowane wyniki" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="10" executed="10" passed="10" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.9)&#xD;
+[xUnit.net 00:00:00.07]   Discovering: UserService.Tests&#xD;
+[xUnit.net 00:00:00.10]   Discovered:  UserService.Tests&#xD;
+[xUnit.net 00:00:00.11]   Starting:    UserService.Tests&#xD;
+[xUnit.net 00:00:00.88]   Finished:    UserService.Tests&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
