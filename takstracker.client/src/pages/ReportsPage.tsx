@@ -16,7 +16,12 @@ const startOfToday = () => {
   return date
 }
 
-const ReportsPage = () => {
+interface ReportsPageProps {
+  selectedProjectId: string
+  selectedProject: ProjectDto | null
+}
+
+const ReportsPage = ({ selectedProjectId, selectedProject }: ReportsPageProps) => {
   const [projects, setProjects] = useState<ProjectDto[]>([])
   const [tasks, setTasks] = useState<TaskDto[]>([])
   const [users, setUsers] = useState<UserProfileDto[]>([])
@@ -146,13 +151,16 @@ const ReportsPage = () => {
   const loadData = () =>
     Promise.all([
       api.getProjects(),
-      api.getTasks(),
+      api.getTasks(selectedProjectId ? { projectId: selectedProjectId } : undefined),
       api.getUsers(),
     ])
       .then(([projectData, taskData, userData]) => {
         const accessibleProjectIds = new Set(projectData.map((project) => project.id))
+        const visibleProjects = selectedProject
+          ? projectData.filter((project) => project.id === selectedProject.id)
+          : projectData
 
-        setProjects(projectData)
+        setProjects(visibleProjects)
         setTasks(taskData.filter((task) => accessibleProjectIds.has(task.projectId)))
         setUsers(userData)
         setError(null)
@@ -164,7 +172,7 @@ const ReportsPage = () => {
 
   useEffect(() => {
     loadData()
-  }, [])
+  }, [selectedProjectId, selectedProject])
 
   return (
     <>

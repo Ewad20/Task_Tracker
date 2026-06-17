@@ -1,8 +1,10 @@
 ﻿import type {
   ApiError,
+  AuditFilterRequest,
   AuditLogDto,
   AuthResponse,
   LoginRequest,
+  MarkNotificationReadRequest,
   NotificationDto,
   CreateProjectRequest,
   ProjectDto,
@@ -16,6 +18,7 @@
   UpsertProjectReportRequest,
   ChangePasswordRequest,
   ResetUserPasswordRequest,
+  UpdateProfileRequest,
   UpdateUserRoleRequest,
   UserProfileDto,
 } from "./types";
@@ -147,6 +150,12 @@ const register = (payload: RegisterRequest) =>
 
 const getProfile = () => request<UserProfileDto>("/api/users/me");
 
+const updateProfile = (payload: UpdateProfileRequest) =>
+  request<UserProfileDto>("/api/users/me", {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  });
+
 const getUsers = () => request<UserProfileDto[]>("/api/users");
 
 const updateUserRole = (userId: string, payload: UpdateUserRoleRequest) =>
@@ -221,7 +230,17 @@ const upsertReport = (payload: UpsertProjectReportRequest) =>
 const getNotifications = (projectId?: string) =>
   request<NotificationDto[]>("/api/notifications", undefined, { projectId });
 
-const getAuditLogs = () => request<AuditLogDto[]>("/api/audit");
+const markNotificationRead = (
+  notificationId: string,
+  payload: MarkNotificationReadRequest,
+) =>
+  request<NotificationDto>(`/api/notifications/${notificationId}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  });
+
+const getAuditLogs = (filter?: AuditFilterRequest) =>
+  request<AuditLogDto[]>("/api/audit", undefined, filter ? { ...filter } : undefined);
 
 export const api = {
   getApiBase,
@@ -230,6 +249,7 @@ export const api = {
   login,
   register,
   getProfile,
+  updateProfile,
   getUsers,
   updateUserRole,
   changePassword,
@@ -245,5 +265,6 @@ export const api = {
   getReports,
   upsertReport,
   getNotifications,
+  markNotificationRead,
   getAuditLogs,
 };

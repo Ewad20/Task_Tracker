@@ -26,6 +26,11 @@ export interface UpdateUserRoleRequest {
   role: string
 }
 
+export interface UpdateProfileRequest {
+  displayName: string
+  bio: string
+}
+
 export interface ChangePasswordRequest {
   currentPassword: string
   newPassword: string
@@ -33,6 +38,10 @@ export interface ChangePasswordRequest {
 
 export interface ResetUserPasswordRequest {
   newPassword: string
+}
+
+export interface MarkNotificationReadRequest {
+  isRead: boolean
 }
 
 export interface ProjectDto {
@@ -121,6 +130,12 @@ export interface AuditLogDto {
   entityType: string
   payload: string
   createdAt: string
+}
+
+export interface AuditFilterRequest {
+  userId?: string
+  action?: string
+  entityType?: string
 }
 
 export interface TaskFilterRequest {

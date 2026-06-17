@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { NavLink, Navigate, Route, Routes } from "react-router-dom";
+import { NavLink, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import { api } from "./api/client";
 import type { ProjectDto, UserProfileDto } from "./api/types";
@@ -11,6 +11,8 @@ import ReposPage from "./pages/ReposPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
 import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
+import NotificationsPage from "./pages/NotificationsPage";
 
 interface NavigationItem {
   label: string;
@@ -59,6 +61,7 @@ const AppIcon = ({ name }: { name: IconName }) => (
 );
 
 function App() {
+  const navigate = useNavigate();
   const [isNavigationOpen, setIsNavigationOpen] = useState(true);
   const [profile, setProfile] = useState<UserProfileDto | null>(null);
   const [projects, setProjects] = useState<ProjectDto[]>([]);
@@ -194,6 +197,16 @@ function App() {
     setIsUserMenuOpen(false);
   };
 
+  const handleOpenProfile = () => {
+    setIsUserMenuOpen(false);
+    navigate("/profile");
+  };
+
+  const handleOpenNotifications = () => {
+    setIsUserMenuOpen(false);
+    navigate("/notifications");
+  };
+
   if (!hasToken) {
     return <AuthPage onAuthSuccess={loadProfile} />;
   }
@@ -253,6 +266,22 @@ function App() {
                     {profile ? "Aktywna sesja" : "Brak aktywnej sesji"}
                   </span>
                 </div>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={handleOpenProfile}
+                  disabled={!profile}
+                >
+                  Mój profil
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={handleOpenNotifications}
+                  disabled={!profile}
+                >
+                  Powiadomienia
+                </button>
                 <button
                   type="button"
                   className="btn btn-outline-danger"
@@ -332,7 +361,26 @@ function App() {
             />
             <Route path="/pipelines" element={<PipelinesPage />} />
             <Route path="/repos" element={<ReposPage />} />
-            <Route path="/reports" element={<ReportsPage />} />
+            <Route
+              path="/reports"
+              element={
+                <ReportsPage
+                  selectedProjectId={selectedProjectId}
+                  selectedProject={selectedProject}
+                />
+              }
+            />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route
+              path="/profile"
+              element={
+                <ProfilePage
+                  onProfileUpdated={(updatedProfile) =>
+                    setProfile(updatedProfile)
+                  }
+                />
+              }
+            />
             <Route
               path="/settings"
               element={
