@@ -18,156 +18,210 @@
   ResetUserPasswordRequest,
   UpdateUserRoleRequest,
   UserProfileDto,
-} from './types'
+} from "./types";
 
-const tokenKey = 'tt_auth_token'
-const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
-  'http://127.0.0.1:8080'
+const tokenKey = "tt_auth_token";
+const apiBase =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined) ??
+  "http://127.0.0.1:8080";
 
-const buildUrl = (path: string, query?: Record<string, string | number | boolean | undefined>) => {
-  const url = new URL(`${apiBase}${path}`)
+const buildUrl = (
+  path: string,
+  query?: Record<string, string | number | boolean | undefined>,
+) => {
+  const url = new URL(`${apiBase}${path}`);
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
-        url.searchParams.append(key, String(value))
+      if (value !== undefined && value !== null && value !== "") {
+        url.searchParams.append(key, String(value));
       }
-    })
+    });
   }
-  return url.toString()
-}
+  return url.toString();
+};
 
-const getToken = () => localStorage.getItem(tokenKey)
-const getApiBase = () => apiBase
+const getToken = () => localStorage.getItem(tokenKey);
+const getApiBase = () => apiBase;
 const setToken = (token: string | null) => {
   if (token) {
-    localStorage.setItem(tokenKey, token)
+    localStorage.setItem(tokenKey, token);
   } else {
-    localStorage.removeItem(tokenKey)
+    localStorage.removeItem(tokenKey);
   }
-  window.dispatchEvent(new Event('auth-changed'))
-}
+  window.dispatchEvent(new Event("auth-changed"));
+};
+
+type ApiProblemDetails = {
+  title?: string;
+  detail?: string;
+  error?: string;
+  message?: string;
+  errors?: Record<string, string[] | string>;
+};
+
+const formatApiErrorMessage = (
+  payload: ApiProblemDetails,
+  fallback: string,
+) => {
+  if (payload.error) {
+    return payload.error;
+  }
+
+  if (payload.message) {
+    return payload.message;
+  }
+
+  if (payload.detail) {
+    return payload.detail;
+  }
+
+  if (payload.title && payload.errors) {
+    const validationErrors = Object.entries(payload.errors).flatMap(
+      ([field, messages]) => {
+        const normalizedMessages = Array.isArray(messages)
+          ? messages
+          : [messages];
+        return normalizedMessages.map((message) => `${field}: ${message}`);
+      },
+    );
+
+    if (validationErrors.length > 0) {
+      return `${payload.title}: ${validationErrors.join("; ")}`;
+    }
+
+    return payload.title;
+  }
+
+  return payload.title ?? fallback;
+};
 
 const request = async <T>(
   path: string,
   options: RequestInit = {},
   query?: Record<string, string | number | boolean | undefined>,
 ): Promise<T> => {
-  const token = getToken()
+  const token = getToken();
   const response = await fetch(buildUrl(path, query), {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
-  })
+  });
 
   if (!response.ok) {
-    const text = await response.text()
-    let message = text
+    const text = await response.text();
+    let message = text || response.statusText;
+
     try {
-      const payload = JSON.parse(text) as { error?: string }
-      message = payload.error ?? text
+      const payload = JSON.parse(text) as ApiProblemDetails;
+      message = formatApiErrorMessage(payload, message);
     } catch {
-      message = text
+      message = text || response.statusText;
     }
-    const error = new Error(message || response.statusText) as ApiError
-    error.status = response.status
-    throw error
+
+    const error = new Error(message || response.statusText) as ApiError;
+    error.status = response.status;
+    throw error;
   }
 
   if (response.status === 204) {
-    return undefined as T
+    return undefined as T;
   }
 
-  return (await response.json()) as T
-}
+  return (await response.json()) as T;
+};
 
 const login = (payload: LoginRequest) =>
-  request<AuthResponse>('/api/users/login', {
-    method: 'POST',
+  request<AuthResponse>("/api/users/login", {
+    method: "POST",
     body: JSON.stringify(payload),
-  })
+  });
 
 const register = (payload: RegisterRequest) =>
-  request<AuthResponse>('/api/users/register', {
-    method: 'POST',
+  request<AuthResponse>("/api/users/register", {
+    method: "POST",
     body: JSON.stringify(payload),
-  })
+  });
 
-const getProfile = () => request<UserProfileDto>('/api/users/me')
+const getProfile = () => request<UserProfileDto>("/api/users/me");
 
-const getUsers = () => request<UserProfileDto[]>('/api/users')
+const getUsers = () => request<UserProfileDto[]>("/api/users");
 
 const updateUserRole = (userId: string, payload: UpdateUserRoleRequest) =>
   request<UserProfileDto>(`/api/users/${userId}/role`, {
-    method: 'PUT',
+    method: "PUT",
     body: JSON.stringify(payload),
-  })
+  });
 
 const changePassword = (payload: ChangePasswordRequest) =>
-  request<void>('/api/users/me/password', {
-    method: 'PUT',
+  request<void>("/api/users/me/password", {
+    method: "PUT",
     body: JSON.stringify(payload),
-  })
+  });
 
 const resetUserPassword = (userId: string, payload: ResetUserPasswordRequest) =>
   request<void>(`/api/users/${userId}/password`, {
-    method: 'PUT',
+    method: "PUT",
     body: JSON.stringify(payload),
-  })
+  });
 
-const getProjects = () => request<ProjectDto[]>('/api/projects')
+const getProjects = () => request<ProjectDto[]>("/api/projects");
 
 const createProject = (payload: CreateProjectRequest) =>
-  request<ProjectDto>('/api/projects', {
-    method: 'POST',
+  request<ProjectDto>("/api/projects", {
+    method: "POST",
     body: JSON.stringify(payload),
-  })
+  });
 
 const updateProject = (projectId: string, payload: UpdateProjectRequest) =>
   request<ProjectDto>(`/api/projects/${projectId}`, {
-    method: 'PUT',
+    method: "PUT",
     body: JSON.stringify(payload),
-  })
+  });
 
 const deleteProject = (projectId: string) =>
   request<void>(`/api/projects/${projectId}`, {
-    method: 'DELETE',
-  })
+    method: "DELETE",
+  });
 
 const getTasks = (filter?: TaskFilterRequest) =>
-  request<TaskDto[]>('/api/tasks', undefined, filter ? { ...filter } : undefined)
+  request<TaskDto[]>(
+    "/api/tasks",
+    undefined,
+    filter ? { ...filter } : undefined,
+  );
 
 const createTask = (payload: CreateTaskRequest) =>
-  request<TaskDto>('/api/tasks', {
-    method: 'POST',
+  request<TaskDto>("/api/tasks", {
+    method: "POST",
     body: JSON.stringify(payload),
-  })
+  });
 
 const updateTask = (taskId: string, payload: UpdateTaskRequest) =>
   request<TaskDto>(`/api/tasks/${taskId}`, {
-    method: 'PUT',
+    method: "PUT",
     body: JSON.stringify(payload),
-  })
+  });
 
 const deleteTask = (taskId: string) =>
   request<void>(`/api/tasks/${taskId}`, {
-    method: 'DELETE',
-  })
+    method: "DELETE",
+  });
 
-const getReports = () => request<ProjectReportDto[]>('/api/reports')
+const getReports = () => request<ProjectReportDto[]>("/api/reports");
 
 const upsertReport = (payload: UpsertProjectReportRequest) =>
-  request<ProjectReportDto>('/api/reports', {
-    method: 'POST',
+  request<ProjectReportDto>("/api/reports", {
+    method: "POST",
     body: JSON.stringify(payload),
-  })
+  });
 
 const getNotifications = (projectId?: string) =>
-  request<NotificationDto[]>('/api/notifications', undefined, { projectId })
+  request<NotificationDto[]>("/api/notifications", undefined, { projectId });
 
-const getAuditLogs = () => request<AuditLogDto[]>('/api/audit')
+const getAuditLogs = () => request<AuditLogDto[]>("/api/audit");
 
 export const api = {
   getApiBase,
@@ -192,4 +246,4 @@ export const api = {
   upsertReport,
   getNotifications,
   getAuditLogs,
-}
+};
